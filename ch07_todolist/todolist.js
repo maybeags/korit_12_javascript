@@ -11,6 +11,7 @@ const todoList = document.getElementById('todo-list');
 // 그러면 이하의 코드가 현재 localStorage에 todos key를 가지고 있으면 오류가 안나겠지만, 맨 처음에 아무것도 없다면 오류가 발생할겁니다.
 let todos = JSON.parse(localStorage.getItem('todos')) || [];
 console.log(todos);
+
 // todos 키가 있으면 그 value를 todos 변수에 넣고, 없으면 빈 배열을 todos 변수에 넣겠다는 의미.
 /**
  * 배열로 한 건 임의적으로 한겁니다. todo들이 여러개 있으니까 일단 배열로 잡았습니다. 그렇다면 내부 element의 자료형은 무엇이 되는게 가장 적절할까요. 현재 제가 브리핑한 방식으로는 true/false를 감지할 수 있어야하고, todo 내용이 string으로 표시되어야하니 적어도 boolean과 string이 있는 JS 객체가 element가 되어야할 것 같습니다.
@@ -61,7 +62,6 @@ function renderTodos() {
     li.append(deleteBtn);
 
     todoList.appendChild(li);
-    console.log(todoList);
 
     // 체크박스 버튼 눌렀을 때 todo.completed의 값이 true->false / false->true로 변경이 일어나야 합니다.
     checkbox.addEventListener('change', () => {
@@ -69,8 +69,26 @@ function renderTodos() {
       // 완료 상태가 됐을 때 CSS를 서로 다르게 적용할겁니다.
       li.classList.toggle('completed', checkbox.checked);
       saveTodos();  // 아직 정의안했습니다. true-false로 toggle이 일어나면 그 상태를 저장할 함수가 필요해보여서 지금 만들겠다고 결정했습니다.
-    })
+    });
+    // 삭제 버튼 클릭 이벤트
+    deleteBtn.addEventListener('click', () => {
+      const itemText = span.textContent;
+  
+      const itemIndex = todos.findIndex(todo => todo.text === itemText);
+      // 이제 인덱스가 일치하는 거 삭제할겁니다.
+      if(itemIndex !== -1) {  // 일치하는 인덱스가 없으면 -1이라서
+        todos.splice(itemIndex, 1); // splice() 복습해야겠죠.
+        // 이상의 코드는 배열에서 특정 element인 객체를 삭제하는겁니다.
+        // li 태그랑은 상관이 없기 때문에 추가로 삭제가 필요합니다.
+        li.remove();
+        // 지우기만 하고 브라우저에 반영 안되면 안되니까
+        saveTodos();
+      }
   });
+
+
+
+  })
 }
 
 function saveTodos() {
@@ -108,5 +126,13 @@ function addTodo() {
 // 버튼 태그에 딸려있는 메서드를 써야합니다(사실상 매번 이루어지는 방식)
 addBtn.addEventListener('click', addTodo);  // 근데 addTodo()가 아니라 addTodo입니다. addTodo()는 함수의 결과값이 들어간 거고, addTodo는 함수 자체를 넣은겁니다.
 
+// 엔터키 입력 이벤트
+todoInput.addEventListener('keydown', event => {
+  if(event.key === 'Enter') {
+    addTodo();
+  }
+});
+
+
 // 새로고침 했을 때, 혹은 페이지 들어갔을 때 renderTodos()가 일단 한 번 호출이 되어야 할 것 같습니다.
-window.onload.renderTodos();
+window.onload = renderTodos();
