@@ -25,7 +25,7 @@ function renderTodos() {
   // todoList는 ul 태그가 포함된 HTML element에 해당.
 
   // todos를 반복 돌려가지고 html 요소로 만들어줄 겁니다.
-  todos.array.forEach((todo, index) => {
+  todos.forEach((todo, index) => {
     /**
      * todos의 반복을 돌면 내부 element가 존재할겁니다.
      */
@@ -61,6 +61,7 @@ function renderTodos() {
     li.append(deleteBtn);
 
     todoList.appendChild(li);
+    console.log(todoList);
 
     // 체크박스 버튼 눌렀을 때 todo.completed의 값이 true->false / false->true로 변경이 일어나야 합니다.
     checkbox.addEventListener('change', () => {
@@ -73,5 +74,39 @@ function renderTodos() {
 }
 
 function saveTodos() {
-  // 밥먹고 나서 하겠습니다.
+  // 아까 체크박스 변동 일어났을 때 상태 저장하는 함수였습니다.
+  // -> 어디에? localStorage
+  localStorage.setItem('todos', JSON.stringify(todos));
+  // 1 번 매개변수 - key 이름 / 2 번 매개변수 - value를 집어넣습니다.
+  // localStorage에는 string 밖에 못들어가니까 JSON.stringify를 통해서
+  // 배열을 string으로 바꿔줘서 저장
 }
+
+function addTodo() {
+  const todoText = todoInput.value.trim();
+  if(todoText === '') {
+    alert('내용을 입력하세요');
+    return;       // 메서드를 종료시킨다는 의미
+  }
+  const newTodo = {
+    text: todoText,
+    completed: false,   // 초기 생성시에 false로 고정한다는 의미입니다.
+  }
+
+  // 위에서 생성된 newTodo 객체는 todos의 element가 되어야합니다.
+  todos.push(newTodo);
+  // 추가한 이후에 input 태그 내에 작성된 text를 날려야합니다.(주석처리해보세요)
+  todoInput.value = '';
+  // renderTodos();  // 추가 버튼 누르고 나면 localStorage에 추가된 배열을 가지고 와야 합니다.
+  saveTodos();  // 저장도 해야합니다.
+  renderTodos();
+}
+// 이상의 부분이 todo list에 사용되는 함수들을 정의한거라고 볼 수 있습니다.
+// 그런데 특정 행위가 일어났을 때 이 함수들이 호출되어야 합니다.
+
+// 추가 버튼을 눌렀을 때 addTodo() 함수가 호출되도록 정의할 예정.
+// 버튼 태그에 딸려있는 메서드를 써야합니다(사실상 매번 이루어지는 방식)
+addBtn.addEventListener('click', addTodo);  // 근데 addTodo()가 아니라 addTodo입니다. addTodo()는 함수의 결과값이 들어간 거고, addTodo는 함수 자체를 넣은겁니다.
+
+// 새로고침 했을 때, 혹은 페이지 들어갔을 때 renderTodos()가 일단 한 번 호출이 되어야 할 것 같습니다.
+window.onload.renderTodos();
