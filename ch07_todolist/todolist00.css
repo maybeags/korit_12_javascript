@@ -1,0 +1,118 @@
+/* todolist.css */
+
+/* 기본 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif; /* 부드러운 폰트 권장 */
+}
+
+body.page-container {
+  background-color: #fce4ec; /* 연한 핑크 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 블록 (Block) */
+.todo-app {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+}
+
+/* 엘리먼트 (Element) */
+.todo-app__title {
+  color: #ff80ab;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.todo-app__input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.todo-app__input {
+  flex: 1;
+  border: 2px solid #f8bbd0;
+  border-radius: 15px;
+  padding: 10px 15px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.todo-app__input:focus {
+  border-color: #f06292;
+}
+
+.todo-app__add-button {
+  background-color: #f06292;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 0 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.todo-app__add-button:hover {
+  transform: scale(1.05);
+  background-color: #ec407a;
+}
+
+.todo-app__list {
+  list-style: none;
+}
+
+.todo-app__item {
+  background-color: #f3e5f5; /* 연한 보라 */
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.todo-app__text {
+  flex: 1;
+  color: #4a148c;
+  font-size: 0.95rem;
+}
+
+.todo-app__delete-button {
+  background: #ffcdd2;
+  color: #c62828;
+  border: none;
+  border-radius: 8px;
+  padding: 5px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* 애니메이션 효과 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 완료된 아이템 스타일 (Modifier) */
+.todo-app__item--completed .todo-app__text {
+  text-decoration: line-through;
+  color: #bdbdbd; /* 회색으로 흐리게 */
+}
+
+.todo-app__item--completed {
+  background-color: #f5f5f5;
+  opacity: 0.8;
+}
