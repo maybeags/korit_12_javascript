@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch API</title>
+</head>
+<body bgcolor="5f5f5f">
+  <h1>01_fetchapi.html</h1>
+  <script>
+    // 형식에 주목해두겠습니다.
+    // Get / Read : 읽어오기 / id가 1인 데이터 조회
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+    .then(response => response.json())
+    .then((json) => console.log(json.body));
+
+    // Post / Create : 데이터 생성
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: "POST",   // http request 요청 방법
+      body: JSON.stringify({
+        title: '왜 다들 눈이 반만 떠져있나요',
+        body: '잠이 오시나요',
+        userId: 1,
+      }),
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+      },
+    })
+    .then(response => response.json())
+    .then(json => console.log(json));
+  </script>
+</body>
+</html>
