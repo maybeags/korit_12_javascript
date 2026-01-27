@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body bgcolor="5f5f5f">
+  <input 
+    type="text"
+    onkeypress="myFunction(event);"
+    onkeydown="myFunction(event);"
+    onkeyup="myFunction(event);"
+  >
+  <script>
+    function myFunction(e) {
+      console.log(e.type);  // 이벤트 이름 출력
+      // console.log(e.target);  // 이벤트를 발생시킨 DOM 요소
+      console.log(e.target.value);  // 이벤트 입력 시점에 입력된 값이 어떻게 변하는지 출력 -> e.target.value는 input 태그에서 그냥 필수적이라고 보셔도 됩니다.
+    }
+  </script>
+</body>
+</html>
