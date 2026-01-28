@@ -67,7 +67,7 @@ header {
   align-self: flex-start;
   background-color: #f1f0f0;
   color: #333;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; /* 여기 수정함 */
 }
 
 .loading {
